@@ -1,13 +1,16 @@
 import torch
 import pickle
-from argparse import ArgumentParser
 import os
-from train import Trainer
-from config import Config
 import json
 import sys
+import warnings
 
+from argparse import ArgumentParser
 
+from config import Config
+from train import Trainer
+
+warnings.filterwarnings('ignore')
 
 def main(config_path:Config, args:ArgumentParser):
     device = torch.device('cuda:0') if args.device == 'gpu' else torch.device('cpu')

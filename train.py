@@ -15,7 +15,8 @@ from utils_func import *
 from utils_data import DLoader
 from model_vgg import *
 
-
+# 사용할 데이터 수
+datanum = 10000
 
 class Trainer:
     def __init__(self, config:Config, device:torch.device, mode:str, continuous:int):
@@ -59,9 +60,9 @@ class Trainer:
         self.caption_file = self.base_path + 'data/captions.txt'
         self.all_pairs = collect_all_pairs(self.caption_file)
 
-        self.all_pairs = self.all_pairs[:96]
+        self.all_pairs = self.all_pairs[:datanum]
 
-        self.trainset_id, self.valset_id = make_dataset_ids(len(self.all_pairs), 32)
+        self.trainset_id, self.valset_id = make_dataset_ids(len(self.all_pairs), datanum // 5)
         self.tokenizer = Tokenizer(self.config, self.all_pairs, self.trainset_id)
 
         if self.mode == 'train':
@@ -153,7 +154,7 @@ class Trainer:
 
                     total_loss += loss.item()*batch_size
                     total_acc += acc * batch_size
-                    if i % 100 == 0:
+                    if i % 20 == 0:
                         print('Epoch {}: {}/{} step loss: {}, top-{} acc: {}'.format(epoch+1, i, len(self.dataloaders[phase]), loss.item(), self.config.topk, acc))
                 epoch_loss = total_loss/len(self.dataloaders[phase].dataset)
                 epoch_acc = total_acc/len(self.dataloaders[phase].dataset)
