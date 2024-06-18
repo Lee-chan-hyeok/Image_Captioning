@@ -16,7 +16,7 @@ from utils_data import DLoader
 from model_vgg import *
 
 # 사용할 데이터 수
-datanum = 10000
+datanum = 100
 
 class Trainer:
     def __init__(self, config:Config, device:torch.device, mode:str, continuous:int):
@@ -34,6 +34,7 @@ class Trainer:
         # path, data params
         self.base_path = self.config.base_path
         self.model_path = self.config.model_path
+        self.data_path = self.config.data_path
 
         # train params
         self.batch_size = self.config.batch_size
@@ -56,8 +57,8 @@ class Trainer:
             transforms.Normalize(mean, std)])
 
         # make dataset
-        self.img_folder = self.base_path + 'data/images/'
-        self.caption_file = self.base_path + 'data/captions.txt'
+        self.img_folder = self.data_path + 'images/'
+        self.caption_file = self.data_path + 'captions.txt'
         self.all_pairs = collect_all_pairs(self.caption_file)
 
         self.all_pairs = self.all_pairs[:datanum]
@@ -78,14 +79,18 @@ class Trainer:
         if self.mode == 'train':
             self.enc_optimizer = optim.Adam(params=filter(lambda p: p.requires_grad, self.encoder.parameters()), lr=self.enc_lr)
             self.dec_optimizer = optim.Adam(self.decoder.parameters(), lr=self.dec_lr)
+
             if self.continuous:
                 self.check_point = torch.load(self.model_path, map_location=self.device)
                 self.encoder.load_state_dict(self.check_point['model']['encoder'])
                 self.decoder.load_state_dict(self.check_point['model']['decoder'])
+
                 self.enc_optimizer.load_state_dict(self.check_point['optimizer']['encoder'])
                 self.dec_optimizer.load_state_dict(self.check_point['optimizer']['decoder'])
+
                 del self.check_point
                 torch.cuda.empty_cache()
+
         elif self.mode == 'test' or self.mode == 'inference':
             self.trans4attn = transforms.Compose([
                 transforms.Resize((252, 252)),
@@ -156,6 +161,7 @@ class Trainer:
                     total_acc += acc * batch_size
                     if i % 20 == 0:
                         print('Epoch {}: {}/{} step loss: {}, top-{} acc: {}'.format(epoch+1, i, len(self.dataloaders[phase]), loss.item(), self.config.topk, acc))
+
                 epoch_loss = total_loss/len(self.dataloaders[phase].dataset)
                 epoch_acc = total_acc/len(self.dataloaders[phase].dataset)
                 print('{} loss: {:4f}, top-{} acc: {:4f}\n'.format(phase, epoch_loss, self.config.topk, epoch_acc))
@@ -328,5 +334,3 @@ class Trainer:
         # save result figures
         results_save_path = self.base_path + 'result/' + model_name + '/'
         save_figures(img_id, gt, pred, results_save_path)
-        if self.config.is_attn:
-            save_attn_figures(img_id, attn_img, pred, results_save_path, self.trans4attn, self.config.enc_hidden_size)

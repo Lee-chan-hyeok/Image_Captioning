@@ -47,7 +47,7 @@ def main(config_path:Config, args:ArgumentParser):
         with open(model_json_path, 'w') as f:
             json.dump(config.__dict__, f)
     
-   
+    
     trainer = Trainer(config, device, args.mode, args.cont)
 
     if args.mode == 'train':

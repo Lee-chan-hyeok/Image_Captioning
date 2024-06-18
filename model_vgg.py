@@ -8,7 +8,6 @@ vgg_config = [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512]
 def get_vgg_layer(config, batch_norm):
     layers = []
     in_channels = 3
-    print('change to 1024')
 
     for c in config:
         assert c == 'M' or isinstance(c, int)
@@ -40,7 +39,7 @@ class Encoder(nn.Module):
         # base_model = resnet101(pretrained=True, progress=False)
         # base_model = list(base_model.children())[:-2]
         base_model = get_vgg_layer(vgg_config, True)
-        self.vgg = nn.Sequential(*base_model)  # output size: B x 2048 x H/32 x W/32
+        self.vgg = nn.Sequential(*base_model)  # output size: B x 512 x H/32 x W/32
         self.pooling = nn.AdaptiveAvgPool2d((self.enc_hidden_size, self.enc_hidden_size))
 
         self.relu = nn.ReLU()

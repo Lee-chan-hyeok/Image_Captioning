@@ -1,7 +1,8 @@
 {   
     "is_attn": 0,
     
-    "base_path": "./",
+    "data_path": "/content/drive/MyDrive/img_caption/DA35-4th-teamlkk-ImageCaptioning/data/",
+    "base_path": "/content/drive/MyDrive/data/img_cap_project/",
     "model_name": "image_captioning_model",
     "loss_data_name": "image_captioning_model",
 
