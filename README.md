@@ -140,7 +140,7 @@
   - Not Good Case
   - Bad Case
 
-- Test 3 : 파라미터, 에폭 적고
+- Test 3 : img_size : 192, batch_size : 64, encoder_lr : 0.00003, decoder_lr : 0.0001
   - Loss graph <br/>
     <img src = "./selected_result/Test3_Overfiting/img_size_192_batch_size_64_elr_0.00003_dlr_0.0001.png"> <br/>
     과적합이 발생했지만 train set, test set 둘 다 loss 값이 가장 낮은 결과를 도출
@@ -170,33 +170,33 @@
 
 ## 1. 프로젝트 진행 프로세스 설명
   1. 참고 논문 분석
-    - 스터디 형식으로 각자 이해한 내용을 설명하며 토의
-    - 참고 논문 : Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
-    - 참여자 : 김연중, 김인호, 이찬혁, 이하 동일
+  - 스터디 형식으로 각자 이해한 내용을 설명하며 토의
+  - 참고 논문 : Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
+  - 참여자 : 김연중, 김인호, 이찬혁, 이하 동일
 
   2. 구현 방안 토의
-    - 전체적인 모델의 대략적인 구조를 정함, 이후 세부적인 부분에 대해 적용할 레이어를 조사하고 어떤 것을 사용할지 결정 -> Encoder에는 VGG 모델의 Feature Extractor 부분, Decoder에는 LSTM Layer를 사용하기로 결정
+  - 전체적인 모델의 대략적인 구조를 정함, 이후 세부적인 부분에 대해 적용할 레이어를 조사하고 어떤 것을 사용할지 결정 -> Encoder에는 VGG 모델의 Feature Extractor 부분, Decoder에는 LSTM Layer를 사용하기로 결정
 
   3. 모델 구현
-    - 논문의 내용을 단순화한 모델링을 시도하는 과정에서 많은 오류가 발생하여 이미지 캡션 튜토리얼 코드를 참고하는 방향으로 결정
-    - 참고 코드 1 : https://github.com/ljm565/image-captioning-show-attend-and-tell
-    - 참고 코드 2 : https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning
+  - 논문의 내용을 단순화한 모델링을 시도하는 과정에서 많은 오류가 발생하여 이미지 캡션 튜토리얼 코드를 참고하는 방향으로 결정
+  - 참고 코드 1 : https://github.com/ljm565/image-captioning-show-attend-and-tell
+  - 참고 코드 2 : https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning
 
   4. 모델 최적화
-    - 데이터셋의 크기와 하이퍼 파라미터를 조정해가며 결과를 비교
+  - 데이터셋의 크기와 하이퍼 파라미터를 조정해가며 결과를 비교
 
-## 2. 각 프로세스 결과 분석
+## 2. 프로세스별 결과
   1. 참고 논문 분석
   - 논문에서는 Encoder에 Resnet, Decoder에는 LSTM 사용, Hard Attention 사용
 
   2. 구현 방안 토의
-  - 논문을 바탕으로 직접 모델링하는 과정에서 오류들을 해결하는데 많은 시간이 소요되었으며, 정해진 기한 내에 모델링을 하고 학습까지 진행하기가 어렵다고 생각하여 참고할만한 코드를 조사했음, 이후 해당 코드를 바탕으로 적절히 수정하는 방법을 선택
-  - attention 부분을 제거하고 Encoder에 Resnet 모델 대신 Vgg 모델을 사용하는 식으로 구조를 단순화
+    - 논문을 바탕으로 직접 모델링하는 과정에서 오류들을 해결하는데 많은 시간이 소요되었으며, 정해진 기한 내에 모델링을 하고 학습까지 진행하기가 어렵다고 생각하여 참고할만한 코드를 조사했음, 이후 해당 코드를 바탕으로 적절히 수정하는 방법을 선택
+    - attention 부분을 제거하고 Encoder에 Resnet 모델 대신 Vgg 모델을 사용하는 식으로 구조를 단순화
 
   3. 모델 구현
-  - 먼저 참고한 코드가 어떤 구조로 되어있는지 각자 분석을 진행하며, 다시 스터디 형식으로 서로 이해한 내용을 공유
-  - hard attention을 적용한 모델과 그렇지 않은 모델을 만들어 두 경우의 성능을 비교하는 것을 목표로 함
-  - hard attention을 적용한 모델을 구현하는 과정에서 해결할 수 없는 오류가 발생해 적용하지 않은 모델만 사용하기로 결정
+    - 먼저 참고한 코드가 어떤 구조로 되어있는지 각자 분석을 진행하며, 다시 스터디 형식으로 서로 이해한 내용을 공유
+    - hard attention을 적용한 모델과 그렇지 않은 모델을 만들어 두 경우의 성능을 비교하는 것을 목표로 함
+    - hard attention을 적용한 모델을 구현하는 과정에서 해결할 수 없는 오류가 발생해 적용하지 않은 모델만 사용하기로 결정
 
 4. 모델 학습 및 최적화
   - 최적화 과정
@@ -208,7 +208,7 @@
     - data set의 크기를 증가시키면 학습 시간은 약간 늘어나지만, 성능이 향상되는 것을 확인
     - 따라서 data set의 크기는 4만으로, 나머지 하이퍼 파라미터들은 적절한 값으로 고정한 뒤, learning rate를 변경하여 최적화 과정을 완료함
 
-  - 향후 개선점
-    - 시간을 들여 encoder를 Resnet 구조로 변경하고 layer의 수를 늘리는 방식으로 실험을 진행
-    - 해당 논문의 핵심 메커니즘인 hard attention에 대해 좀 더 공부하고 모델에 적용
-    - 다른 data set을 사용하거나 기존 data set에 추가하여 성능 향상에 영향이 있는지 확인
+5. 향후 개선점
+  - 시간을 들여 encoder를 Resnet 구조로 변경하고 layer의 수를 늘리는 방식으로 실험을 진행
+  - 해당 논문의 핵심 메커니즘인 hard attention에 대해 좀 더 공부하고 모델에 적용
+  - 다른 data set을 사용하거나 기존 data set에 추가하여 성능 향상에 영향이 있는지 확인
