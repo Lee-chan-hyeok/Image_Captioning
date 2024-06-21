@@ -169,38 +169,36 @@
 # 프로세스 검토 결과 보고서
 
 ## 1. 프로젝트 진행 프로세스 설명
-- 프로젝트 흐름도 및 단계 별 설명
-  - 단계별 목표 및 주요 활동
-    - 1. 참고 논문 분석
-      - 스터디 형식으로 각자 이해한 내용을 설명하며 토의
-      - 참고 논문 : Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
-      - 참여자 : 김연중, 김인호, 이찬혁, 이하 동일
+  1. 참고 논문 분석
+    - 스터디 형식으로 각자 이해한 내용을 설명하며 토의
+    - 참고 논문 : Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
+    - 참여자 : 김연중, 김인호, 이찬혁, 이하 동일
 
-    - 2. 구현 방안 토의
-      - 전체적인 모델의 대략적인 구조를 정함, 이후 세부적인 부분에 대해 적용할 레이어를 조사하고 어떤 것을 사용할지 결정 -> Encoder에는 VGG 모델의 Feature Extractor 부분, Decoder에는 LSTM Layer를 사용하기로 결정
+  2. 구현 방안 토의
+    - 전체적인 모델의 대략적인 구조를 정함, 이후 세부적인 부분에 대해 적용할 레이어를 조사하고 어떤 것을 사용할지 결정 -> Encoder에는 VGG 모델의 Feature Extractor 부분, Decoder에는 LSTM Layer를 사용하기로 결정
 
-    - 3. 모델 구현
-      - 논문의 내용을 단순화한 모델링을 시도하는 과정에서 많은 오류가 발생하여 이미지 캡션 튜토리얼 코드를 참고하는 방향으로 결정
-      - 참고 코드 1 : https://github.com/ljm565/image-captioning-show-attend-and-tell
-      - 참고 코드 2 : https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning
+  3. 모델 구현
+    - 논문의 내용을 단순화한 모델링을 시도하는 과정에서 많은 오류가 발생하여 이미지 캡션 튜토리얼 코드를 참고하는 방향으로 결정
+    - 참고 코드 1 : https://github.com/ljm565/image-captioning-show-attend-and-tell
+    - 참고 코드 2 : https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning
 
-    - 4. 모델 최적화
-      - 데이터셋의 크기와 하이퍼 파라미터를 조정해가며 결과를 비교
+  4. 모델 최적화
+    - 데이터셋의 크기와 하이퍼 파라미터를 조정해가며 결과를 비교
 
 ## 2. 각 프로세스 결과 분석
-- 1. 참고 논문 분석
+  1. 참고 논문 분석
   - 논문에서는 Encoder에 Resnet, Decoder에는 LSTM 사용, Hard Attention 사용
 
-- 2. 구현 방안 토의
+  2. 구현 방안 토의
   - 논문을 바탕으로 직접 모델링하는 과정에서 오류들을 해결하는데 많은 시간이 소요되었으며, 정해진 기한 내에 모델링을 하고 학습까지 진행하기가 어렵다고 생각하여 참고할만한 코드를 조사했음, 이후 해당 코드를 바탕으로 적절히 수정하는 방법을 선택
   - attention 부분을 제거하고 Encoder에 Resnet 모델 대신 Vgg 모델을 사용하는 식으로 구조를 단순화
 
-- 3. 모델 구현
+  3. 모델 구현
   - 먼저 참고한 코드가 어떤 구조로 되어있는지 각자 분석을 진행하며, 다시 스터디 형식으로 서로 이해한 내용을 공유
   - hard attention을 적용한 모델과 그렇지 않은 모델을 만들어 두 경우의 성능을 비교하는 것을 목표로 함
   - hard attention을 적용한 모델을 구현하는 과정에서 해결할 수 없는 오류가 발생해 적용하지 않은 모델만 사용하기로 결정
 
-- 4. 모델 학습 및 최적화
+4. 모델 학습 및 최적화
   - 최적화 과정
     - 학습 시간을 줄이기 위해 PC방에서 gpu를 이용하여 학습을 진행하려고 했으나, cuda와 cudnn을 설치하고 학습을 실행하는 과정에서 gpu가 인식되지 않는 문제가 반복되었고, 성공한 뒤에도 학습 과정중에 컴퓨터가 다운되는 경우가 많았음
     - 차선으로 구글 코랩(A100, L4)과 개인 데스크탑(3060ti)을 이용해 학습을 하기로 결정
