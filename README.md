@@ -17,7 +17,7 @@
     ![image](https://github.com/Playdata-G-DA35/DA35-4th-teamlkk-ImageCaptioning/assets/130912864/d1f7aaf0-ffd0-45cd-a2cf-318d951cd35c)
 
   - 데이터 타입: 이미지-텍스트 쌍
-  - 데이터 크기: 총 8,091개의 Image와 40,455개의 caption.<br/>
+  - 데이터 크기: 총 8,000개의 Image와 40,000개의 caption.<br/>
     이미지당 5개의 정답 캡션(문장)
     - Train set : 32,000개
     - Validation set : 4,000개
@@ -59,7 +59,7 @@
   > **VGG + LSTM 모델**
     > - 학습 시간: 1 epoch 당 파라미터 설정 별로 약 90~200초 소요
     > - 파라미터 설정별 early stopping : **30~50 epoch**
-    > - 학습 환경(GPU) : Google Colab(A100, L4), GTX3060ti
+    > - 학습 환경(GPU) : Google Colab(A100, L4), RTX 3060ti
 - 모델의 장단점 분석
   - **VGG + LSTM 모델**
     - 장점: 학습 시간과 자원 소모가 상대적으로 적으며, 기본적인 이미지와 텍스트 처리에 적합함.
@@ -88,18 +88,19 @@
 
 
   - 레이어 수
-    - Encoder : MaxPooling Layer 1개
+    - Encoder : Convolution Layer 5개, MaxPooling Layer 4개
     - Decoder :  Embedding Layer 1개, LSTM Layer 1개
 
-  -  파라미터
+  -  하이퍼 파라미터
       > **파라미터 수 : 15개**<br/>
-    is_attn": 0<br/>
-    "img_size": 224<br/>
+    "is_attn": 0<br/>
+    "img_size": 192<br/>
     "enc_hidden_size": 14<br/>
-    "vocab_size": 10000,"max_len": 32<br/>
+    "vocab_size": 10000,<br/>
+    "max_len": 32<br/>
     "dec_hidden_size": 512<br/>
     "dec_num_layers": 1<br/>
-    "dropout": 0.5<br/>
+    "dropout": 0.3<br/>
     "batch_size": 64<br/>
     "epochs": 100<br/>
     "enc_lr": 0.0001<br/>
@@ -127,10 +128,16 @@
 - 처리 속도 (추론 시간, 학습 시간)
 
 ## 2. 테스트 환경
-- 하드웨어(GPU, 메모리, CPU 환경)
-- 소프트웨어 (프레임워크 등)
+- 하드웨어 : Google Colab(A100, L4), RTX 3060ti
+- 소프트웨어 : Google Colab, [Pytorch 2.3.1, Cuda 11.8, Cudnn 8.7.0]
 
 ## 3. 테스트 결과
+- Loss graph
+  - 그래프 첨부
+- train set result
+  - train에서 결과 잘나온 거 첨부
+- test set result
+  - test에서 결과 잘나온거 못나온거 첨부
 
 
 ---
@@ -141,10 +148,21 @@
 ## 1. 프로젝트 진행 프로세스 설명
 - 프로젝트 흐름도 및 단계 별 설명
   - 단계별 목표 및 주요 활동
-- 각 단계에 참여자
-  - 역할 및 책임
-- 각 단계에서 사용된 도구 및 시스템
-  - 사용된 software, framework 등
+    - 1. 참고 논문 분석
+      - 스터디 형식으로 각자 이해한 내용을 설명하며 토의
+      - 참고 논문 : Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
+      - 참여자 : 김연중, 김인호, 이찬혁, 이하 동일
+
+    - 2. 구현 방안 토의
+      - 전체적인 모델의 대략적인 구조를 정함, 이후 세부적인 부분에 대해 적용할 레이어를 조사하고 어떤 것을 사용할지 결정 -> Encoder에는 VGG 모델의 Feature Extractor 부분, Decoder에는 LSTM Layer를 사용하기로 결정
+
+    - 3. 모델 구현
+      - 논문의 내용을 단순화한 모델링을 시도하는 과정에서 많은 오류가 발생하여 이미지 캡션 튜토리얼 코드를 참고하는 방향으로 결정
+      - 참고 코드 1 : https://github.com/ljm565/image-captioning-show-attend-and-tell
+      - 참고 코드 2 : https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning
+
+    - 4. 모델 최적화
+      - 데이터셋의 크기와 하이퍼 파라미터를 조정해가며 결과를 비교
 
 ## 2. 각 프로세스 결과 분석
 - 성과
@@ -156,3 +174,12 @@
   - 해결 방식
 - 개선점
   - 이번에는 적용하지 못했으나 차후 프로젝트를 한다면 개선할 점
+
+- 1. 참고 논문 분석
+  - 논문에서는 Encoder에 Resnet, Decoder에는 LSTM 사용, Hard Attention 사용
+
+- 2. 구현 방안 토의
+
+- 3. 모델 구현
+
+- 4. 모델 최적화
