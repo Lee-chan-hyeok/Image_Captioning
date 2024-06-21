@@ -134,26 +134,46 @@
   - Not Good Case
   - Bad Case
 
-- Test 2 : 파라미터, 에폭 적고
-  - Loss graph
-  - Good Case
-  - Not Good Case
-  - Bad Case
+- Test 2 : img_size : 192, batch_size : 64, encoder_lr : 0.00005, decoder_lr : 0.0001
+  - Loss graph <br/>
+    <img src = "./selected_result/Test2/img_size_192_batch_size_64_elr0.00005_dlr_0.0001.png"> <br/>
+    train set의 loss와 test set의 loss가 비슷한 값으로 수렴하여 잘 학습되었다고 판단
+  
+  - Good Case <br/>
+    <img src = "./selected_result/Test2/Good_result_01.jpg"> <br/>
+    객체의 종류와 수(a group of people), 행동(are playing), 주변 환경(in a field)을 모두 설명 (사람이 판단했을 때는 유사하지만 두 문장에 대해 평가를 했을 때는 점수가 저조한 경우) <br/>
+    <img src = "./selected_result/Test2/Good_result_02.jpg"> <br/>
+    객체의 수와 종류를 구분하고(a dog) 행동(running)과 주변 환경(through the grass)까지 모두 설명 <br/>
+
+  - Detail miss Case <br/>
+    <img src = "./selected_result/Test2/Detail_miss_result_01.jpg"> <br/>
+    객체의 종류와 숫자, 특징, 행동에 대해서 설명을 했으나 정확하진 않음(two hockey players -> group of people, hockey -> playing in the snow) <br/>
+    <img src = "./selected_result/Test2/Detail_miss_result_02.jpg"> <br/>
+    객체의 종류와 특징, 행동, 주변 환경에 대해 설명했으나 자세하진 못함 (two young boys -> a man, concrete barrier -> rock) <br/>
+  
+  - Bad Case <br/>
+    <img src = "./selected_result/Test2/Bad_result_01.jpg"> <br/>
+    객체 종류는 설명했지만, 객체의 수(two men -> a man), 특징(red shirt X), 행동(running X), 주변 환경(grass X) 설명 모두 실패 <br/>
+    <img src = "./selected_result/Test2/Bad_result_02.jpg"> <br/>
+    객체 특징, 행동 예측, 주변 환경, 맥락 설명 모두 실패 <br/>
 
 - Test 3 : img_size : 192, batch_size : 64, encoder_lr : 0.00003, decoder_lr : 0.0001
   - Loss graph <br/>
     <img src = "./selected_result/Test3_Overfiting/img_size_192_batch_size_64_elr_0.00003_dlr_0.0001.png"> <br/>
     과적합이 발생했지만 train set, test set 둘 다 loss 값이 가장 낮은 결과를 도출
+  
   - Good Case <br/>
     <img src = "./selected_result/Test3_Overfiting/Good_result_01.jpg"> <br/>
     객체의 종류와 수(two dogs), 행동(are playing), 주변 환경(field of grass)을 모두 설명 <br/>
     <img src = "./selected_result/Test3_Overfiting/Good_result_02.jpg"> <br/>
     객체의 수와 종류를 구분하고(man, dirt bike) 행동(riding)과 주변 환경(grassy field)까지 모두 설명 <br/>
+  
   - Detail miss Case <br/>
     <img src = "./selected_result/Test3_Overfiting/Detail_miss_result_01.jpg"> <br/>
     객체의 성별, 행동은 설명했으나 특징을 잘못 설명 (yellow shirt -> blue shirt) <br/>
     <img src = "./selected_result/Test3_Overfiting/Detail_miss_result_02.jpg"> <br/>
     객체의 종류와 행동은 설명했으나 자세하진 못함 <br/>
+  
   - Bad Case <br/>
     <img src = "./selected_result/Test3_Overfiting/Bad_result_01.jpg"> <br/>
     객체 특징, 행동 예측, 주변 환경, 맥락 설명 모두 실패 <br/>
