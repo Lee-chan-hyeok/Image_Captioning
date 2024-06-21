@@ -70,15 +70,15 @@
 
 
 ## 5. 선정된 기법
-- a. 최종 선정 모델링 기법
+- 최종 선정 모델링 기법
   > Encoder : VGG 모델의 Feature Extract Layer를 간소화하여 사용
   ![image-2](https://github.com/Playdata-G-DA35/DA35-4th-teamlkk-ImageCaptioning/assets/130912864/2bfd75e8-6c3e-4a5b-af9a-774d0a5a0c1d)
 
   > Decoder :  Embedding Layer 1개와 LSTM Layer 1개로 구성
   ![image-6](https://github.com/Playdata-G-DA35/DA35-4th-teamlkk-ImageCaptioning/assets/130912864/050f35a2-3298-42a7-8c21-c71b49e4b352)
-- b. 선정 이유
+- 선정 이유
   - 여러 파라미터들을 조정해가며 학습하는데에 시간 소요가 많기 때문에 비교적 가벼운 레이어로 모델을 구성하여 사전 학습된 모델을 사용하지 않고, 주어진 데이터로 직접 학습을 진행하기 위함.
-- c. 선정 모델의 구조
+- 선정 모델의 구조
   - 모델의 아키텍처
     - Encoder
       ![image-10](https://github.com/Playdata-G-DA35/DA35-4th-teamlkk-ImageCaptioning/assets/130912864/bc47bfeb-235c-4c98-8525-9ba5774db200)
@@ -127,7 +127,7 @@
 - 하드웨어 : Google Colab(A100, L4), RTX 3060ti
 - 소프트웨어 : Google Colab, [Pytorch 2.3.1, Cuda 11.8, Cudnn 8.7.0]
 
-## 2. 테스트 결과 분석
+## 2. 테스트 결과
 - Test 1 : 파라미터, 에폭 적고
   - Loss graph
   - Good Case
@@ -141,7 +141,7 @@
   
   - Good Case <br/>
     <img src = "./selected_result/Test2/Good_result_01.jpg"> <br/>
-    객체의 종류와 수(a group of people), 행동(are playing), 주변 환경(in a field)을 모두 설명 (사람이 판단했을 때는 유사하지만 두 문장에 대해 평가를 했을 때는 점수가 저조한 경우) <br/>
+    객체의 종류와 수(a group of people), 행동(are playing), 주변 환경(in a field)을 모두 설명 (사람이 판단했을 때는 유사하지만 두 문장에 대해 성능 지표를 통해 평가를 했을 때는 점수가 저조한 경우) <br/>
     <img src = "./selected_result/Test2/Good_result_02.jpg"> <br/>
     객체의 수와 종류를 구분하고(a dog) 행동(running)과 주변 환경(through the grass)까지 모두 설명 <br/>
 
@@ -180,8 +180,16 @@
     <img src = "./selected_result/Test3_Overfiting/Bad_result_02.jpg"> <br/>
     객체 특징, 행동 예측, 주변 환경, 맥락 설명 모두 실패 <br/>
     
-- 결과 분석
-  - 
+## 3. 분석
+- 성능 평가 지표 <br/>
+  : 문장의 특성상 예측한 문장과 ground true 문장이 유사한 의미여도 구조가 다르면 성능 평가에서는 낮은 점수를 기록할 수 있음, 따라서 함축된 의미까지 평가할 수 있는 방향으로 loss 함수의 변경이 필요
+
+- 과적합 허용 <br/>
+  : 앞서 말한 성능 평가 지표의 문제로 인해, 일정 수준의 과적합을 허용했을 때 성능이 향상될 것 이라고 예측했고, 테스트 결과를 직접 분석했을 때 과적합을 허용하지 않았을 때 보다 문장의 다양성과 표현이 풍부해지는 것을 확인
+
+- 예측 결과의 특징 <br/>
+  : 예측한 결과를 살펴봤을때 특정 단어들끼리 쌍을 지어 반복되는 패턴들이 관찰됨 (ex. man -> blue shirt, dog -> running, people -> front of building), <br/>
+  vocab_size와 데이터의 다양성의 한계가 원인일것으로 추정
 
 ---
 
