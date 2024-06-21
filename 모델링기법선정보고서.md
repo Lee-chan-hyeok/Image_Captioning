@@ -20,7 +20,7 @@
   - 데이터 크기: 총 8,000개의 Image와 40,000개의 caption.<br/>
     이미지당 5개의 정답 캡션(문장)
     - Train set : 32,000개
-    - Validation set : 4,000개
+    - Validation set : 8,000개
 - 데이터 전처리 과정 및 방법
   - Image Resize: 이미지를 크기를 조정
   - Tensor 변환: 이미지를 텐서 형태로 변환
