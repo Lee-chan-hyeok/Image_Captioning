@@ -129,10 +129,27 @@
 
 ## 2. 테스트 결과
 - Test 1 : 파라미터, 에폭 적고
-  - Loss graph
-  - Good Case
-  - Not Good Case
-  - Bad Case
+  - Loss graph <br/>
+    <img src = "./selected_result/Test1_Overfiting/img_size_224_batch_size_256_elr0.0001_dlr_0.0004.png"> <br/>
+    Dataset 개수를 40,000으로 하여 학습하였을 때 최초로 과적합 발생, batch_size크기를 늘려 과적합 발생한 것으로 예상
+    
+  - Good Case <br/>
+    <img src = "./selected_result/Test1_Overfiting/Good_result_01.jpg"> <br/>
+    객체의 종류와 수(a group of people), 행동(are playing), 주변 환경(in a field)을 모두 설명 <br/>
+    <img src = "./selected_result/Test1_Overfiting/Good_result_02.jpg"> <br/>
+    객체의 종류와 수(a group of people), 행동(are playing), 주변 환경(in a field)을 모두 설명 <br/>
+    
+  - Detail miss Case <br/>
+    <img src = "./selected_result/Test1_Overfiting/Detail_miss_result_01.jpg"> <br/>
+    객체의 종류와 숫자, 행동에 대해서 설명을 했으나 특징이 명확하지 않음(white jacket이라는 특징이 잘못) <br/>
+    <img src = "./selected_result/Test1_Overfiting/Detail_miss_result_02.jpg"> <br/>
+    객체의 종류와 특징에 대해 정확하게 설명하였으나 주변 환경의 관계가 정확하지 않음 (building 앞에 있지 않으나 앞에 있다고 묘사, 행동 묘사 오류) <br/>
+    
+  - Bad Case <br/>
+    <img src = "./selected_result/Test1_Overfiting/Bad_result2.jpg"> <br/>
+    객체 종류와 수는 설명했지만, 주변 환경 및 행동 인식 실패 <br/>
+    <img src = "./selected_result/Test1_Overfiting/Bad_result01.jpg"> <br/>
+    객체 1은 인식했으나, 객체 2(낙타)를 산으로 인식하며 실패 <br/>
 
 - Test 2 : img_size : 192, batch_size : 64, encoder_lr : 0.00005, decoder_lr : 0.0001
   - Loss graph <br/>
